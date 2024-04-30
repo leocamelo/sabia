@@ -1,0 +1,11 @@
+<.header>
+  Post <%= @post.id %>
+  <:subtitle>This is a post record from your database.</:subtitle>
+</.header>
+
+<.list>
+  <:item title="Body"><%= @post.body %></:item>
+  <:item title="Likes count"><%= @post.likes_count %></:item>
+</.list>
+
+<.back navigate={~p"/posts"}>Back to posts</.back>
