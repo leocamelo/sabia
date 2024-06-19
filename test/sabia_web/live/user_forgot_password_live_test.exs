@@ -12,7 +12,7 @@ defmodule SabiaWeb.UserForgotPasswordLiveTest do
       {:ok, lv, html} = live(conn, ~p"/reset-password")
 
       assert html =~ "Forgot your password?"
-      assert has_element?(lv, ~s|a[href="#{~p"/signup"}"]|, "Register")
+      assert has_element?(lv, ~s|a[href="#{~p"/signup"}"]|, "Sign up")
       assert has_element?(lv, ~s|a[href="#{~p"/login"}"]|, "Log in")
     end
 

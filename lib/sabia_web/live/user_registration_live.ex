@@ -8,7 +8,7 @@ defmodule SabiaWeb.UserRegistrationLive do
     ~H"""
     <div class="mx-auto max-w-sm">
       <.header class="text-center">
-        Register for an account
+        Sign up for an account
         <:subtitle>
           Already registered?
           <.link navigate={~p"/login"} class="font-semibold text-brand hover:underline">

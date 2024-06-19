@@ -100,7 +100,7 @@ defmodule SabiaWeb.UserResetPasswordLiveTest do
       assert conn.resp_body =~ "Log in"
     end
 
-    test "redirects to registration page when the Register button is clicked", %{
+    test "redirects to registration page when the Sign up button is clicked", %{
       conn: conn,
       token: token
     } do
@@ -108,11 +108,11 @@ defmodule SabiaWeb.UserResetPasswordLiveTest do
 
       {:ok, conn} =
         lv
-        |> element(~s|main a:fl-contains("Register")|)
+        |> element(~s|main a:fl-contains("Sign up")|)
         |> render_click()
         |> follow_redirect(conn, ~p"/signup")
 
-      assert conn.resp_body =~ "Register"
+      assert conn.resp_body =~ "Sign up"
     end
   end
 end

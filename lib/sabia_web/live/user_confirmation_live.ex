@@ -16,7 +16,7 @@ defmodule SabiaWeb.UserConfirmationLive do
       </.simple_form>
 
       <p class="text-center mt-4">
-        <.link href={~p"/signup"}>Register</.link> | <.link href={~p"/login"}>Log in</.link>
+        <.link href={~p"/signup"}>Sign up</.link> | <.link href={~p"/login"}>Log in</.link>
       </p>
     </div>
     """

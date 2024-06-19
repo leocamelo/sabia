@@ -9,7 +9,7 @@ defmodule SabiaWeb.UserLoginLiveTest do
       {:ok, _lv, html} = live(conn, ~p"/login")
 
       assert html =~ "Log in"
-      assert html =~ "Register"
+      assert html =~ "Sign up"
       assert html =~ "Forgot your password?"
     end
 
@@ -58,7 +58,7 @@ defmodule SabiaWeb.UserLoginLiveTest do
   end
 
   describe "login navigation" do
-    test "redirects to registration page when the Register button is clicked", %{conn: conn} do
+    test "redirects to registration page when the Sign up button is clicked", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/login")
 
       {:ok, _login_live, login_html} =
@@ -67,7 +67,7 @@ defmodule SabiaWeb.UserLoginLiveTest do
         |> render_click()
         |> follow_redirect(conn, ~p"/signup")
 
-      assert login_html =~ "Register"
+      assert login_html =~ "Sign up"
     end
 
     test "redirects to forgot password page when the Forgot Password button is clicked", %{

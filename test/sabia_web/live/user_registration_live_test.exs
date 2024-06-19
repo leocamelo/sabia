@@ -8,7 +8,7 @@ defmodule SabiaWeb.UserRegistrationLiveTest do
     test "renders registration page", %{conn: conn} do
       {:ok, _lv, html} = live(conn, ~p"/signup")
 
-      assert html =~ "Register"
+      assert html =~ "Sign up"
       assert html =~ "Log in"
     end
 
@@ -30,7 +30,7 @@ defmodule SabiaWeb.UserRegistrationLiveTest do
         |> element("#registration_form")
         |> render_change(user: %{"email" => "with spaces", "password" => "too short"})
 
-      assert result =~ "Register"
+      assert result =~ "Sign up"
       assert result =~ "must have the @ sign and no spaces"
       assert result =~ "should be at least 12 character"
     end
@@ -40,8 +40,8 @@ defmodule SabiaWeb.UserRegistrationLiveTest do
     test "creates account and logs the user in", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/signup")
 
-      email = unique_user_email()
-      form = form(lv, "#registration_form", user: valid_user_attributes(email: email))
+      username = unique_user_username()
+      form = form(lv, "#registration_form", user: valid_user_attributes(username: username))
       render_submit(form)
       conn = follow_trigger_action(form, conn)
 
@@ -50,7 +50,7 @@ defmodule SabiaWeb.UserRegistrationLiveTest do
       # Now do a logged in request and assert on the menu
       conn = get(conn, "/")
       response = html_response(conn, 200)
-      assert response =~ email
+      assert response =~ username
       assert response =~ "Settings"
       assert response =~ "Log out"
     end
