@@ -1,7 +1,7 @@
 <.header>
   Listing Posts
   <:actions>
-    <.link patch={~p"/posts/new"}>
+    <.link patch={~p"/piu/new"}>
       <.button>New Post</.button>
     </.link>
   </:actions>
@@ -10,13 +10,13 @@
 <.table
   id="posts"
   rows={@streams.posts}
-  row_click={fn {_id, post} -> JS.navigate(~p"/posts/#{post}") end}
+  row_click={fn {_id, post} -> JS.navigate(~p"/piu/#{post}") end}
 >
   <:col :let={{_id, post}} label="Body"><%= post.body %></:col>
   <:col :let={{_id, post}} label="Likes count"><%= post.likes_count %></:col>
   <:action :let={{_id, post}}>
     <div class="sr-only">
-      <.link navigate={~p"/posts/#{post}"}>Show</.link>
+      <.link navigate={~p"/piu/#{post}"}>Show</.link>
     </div>
   </:action>
   <:action :let={{id, post}}>
@@ -29,13 +29,13 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action == :new} id="post-modal" show on_cancel={JS.patch(~p"/posts")}>
+<.modal :if={@live_action == :new} id="post-modal" show on_cancel={JS.patch(~p"/")}>
   <.live_component
     module={SabiaWeb.PostLive.FormComponent}
     id={@post.id || :new}
     title={@page_title}
     action={@live_action}
     post={@post}
-    patch={~p"/posts"}
+    patch={~p"/"}
   />
 </.modal>

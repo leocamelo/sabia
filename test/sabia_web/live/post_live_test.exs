@@ -15,19 +15,19 @@ defmodule SabiaWeb.PostLiveTest do
     setup [:register_and_log_in_user, :create_post]
 
     test "lists all posts", %{conn: conn, post: post} do
-      {:ok, _index_live, html} = live(conn, ~p"/posts")
+      {:ok, _index_live, html} = live(conn, ~p"/")
 
       assert html =~ "Listing Posts"
       assert html =~ post.body
     end
 
     test "saves new post", %{conn: conn} do
-      {:ok, index_live, _html} = live(conn, ~p"/posts")
+      {:ok, index_live, _html} = live(conn, ~p"/")
 
       assert index_live |> element("a", "New Post") |> render_click() =~
                "New Post"
 
-      assert_patch(index_live, ~p"/posts/new")
+      assert_patch(index_live, ~p"/piu/new")
 
       assert index_live
              |> form("#post-form", post: @invalid_attrs)
@@ -37,7 +37,7 @@ defmodule SabiaWeb.PostLiveTest do
              |> form("#post-form", post: @create_attrs)
              |> render_submit()
 
-      assert_patch(index_live, ~p"/posts")
+      assert_patch(index_live, ~p"/")
 
       html = render(index_live)
       assert html =~ "Post created successfully"
@@ -45,7 +45,7 @@ defmodule SabiaWeb.PostLiveTest do
     end
 
     test "deletes post in listing", %{conn: conn, post: post} do
-      {:ok, index_live, _html} = live(conn, ~p"/posts")
+      {:ok, index_live, _html} = live(conn, ~p"/")
 
       assert index_live |> element("#posts-#{post.id} a", "Delete") |> render_click()
       refute has_element?(index_live, "#posts-#{post.id}")
@@ -56,7 +56,7 @@ defmodule SabiaWeb.PostLiveTest do
     setup [:register_and_log_in_user, :create_post]
 
     test "displays post", %{conn: conn, post: post} do
-      {:ok, _show_live, html} = live(conn, ~p"/posts/#{post}")
+      {:ok, _show_live, html} = live(conn, ~p"/piu/#{post}")
 
       assert html =~ "Show Post"
       assert html =~ post.body

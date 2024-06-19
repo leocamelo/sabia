@@ -20,8 +20,7 @@ defmodule SabiaWeb.UserForgotPasswordLive do
         </:actions>
       </.simple_form>
       <p class="text-center text-sm mt-4">
-        <.link href={~p"/users/register"}>Register</.link>
-        | <.link href={~p"/users/log_in"}>Log in</.link>
+        <.link href={~p"/signup"}>Register</.link> | <.link href={~p"/login"}>Log in</.link>
       </p>
     </div>
     """
@@ -35,7 +34,7 @@ defmodule SabiaWeb.UserForgotPasswordLive do
     if user = Accounts.get_user_by_email(email) do
       Accounts.deliver_user_reset_password_instructions(
         user,
-        &url(~p"/users/reset_password/#{&1}")
+        &url(~p"/reset-password/#{&1}")
       )
     end
 

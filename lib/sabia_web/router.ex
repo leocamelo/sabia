@@ -13,21 +13,6 @@ defmodule SabiaWeb.Router do
     plug :fetch_current_user
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
-  scope "/", SabiaWeb do
-    pipe_through :browser
-
-    get "/", PageController, :home
-  end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", SabiaWeb do
-  #   pipe_through :api
-  # end
-
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:sabia, :dev_routes) do
     # If you want to use the LiveDashboard in production, you should put
@@ -52,13 +37,13 @@ defmodule SabiaWeb.Router do
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{SabiaWeb.UserAuth, :redirect_if_user_is_authenticated}] do
-      live "/users/register", UserRegistrationLive, :new
-      live "/users/log_in", UserLoginLive, :new
-      live "/users/reset_password", UserForgotPasswordLive, :new
-      live "/users/reset_password/:token", UserResetPasswordLive, :edit
+      live "/signup", UserRegistrationLive, :new
+      live "/login", UserLoginLive, :new
+      live "/reset-password", UserForgotPasswordLive, :new
+      live "/reset-password/:token", UserResetPasswordLive, :edit
     end
 
-    post "/users/log_in", UserSessionController, :create
+    post "/login", UserSessionController, :create
   end
 
   scope "/", SabiaWeb do
@@ -66,24 +51,25 @@ defmodule SabiaWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{SabiaWeb.UserAuth, :ensure_authenticated}] do
-      live "/users/settings", UserSettingsLive, :edit
-      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+      live "/settings", UserSettingsLive, :edit
+      live "/settings/confirm-email/:token", UserSettingsLive, :confirm_email
 
-      live "/posts", PostLive.Index, :index
-      live "/posts/new", PostLive.Index, :new
-      live "/posts/:id", PostLive.Show, :show
+      live "/piu/new", PostLive.Index, :new
     end
   end
 
   scope "/", SabiaWeb do
     pipe_through [:browser]
 
-    delete "/users/log_out", UserSessionController, :delete
+    delete "/logout", UserSessionController, :delete
 
     live_session :current_user,
       on_mount: [{SabiaWeb.UserAuth, :mount_current_user}] do
-      live "/users/confirm/:token", UserConfirmationLive, :edit
-      live "/users/confirm", UserConfirmationInstructionsLive, :new
+      live "/confirm/:token", UserConfirmationLive, :edit
+      live "/confirm", UserConfirmationInstructionsLive, :new
+
+      live "/", PostLive.Index, :index
+      live "/piu/:id", PostLive.Show, :show
     end
   end
 end
