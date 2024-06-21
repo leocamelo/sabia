@@ -17,17 +17,12 @@ defmodule SabiaWeb.PostLiveTest do
     test "lists all posts", %{conn: conn, post: post} do
       {:ok, _index_live, html} = live(conn, ~p"/")
 
-      assert html =~ "Listing Posts"
+      assert html =~ "Feed"
       assert html =~ post.body
     end
 
     test "saves new post", %{conn: conn} do
       {:ok, index_live, _html} = live(conn, ~p"/")
-
-      assert index_live |> element("a", "New Post") |> render_click() =~
-               "New Post"
-
-      assert_patch(index_live, ~p"/piu/new")
 
       assert index_live
              |> form("#post-form", post: @invalid_attrs)
@@ -40,7 +35,7 @@ defmodule SabiaWeb.PostLiveTest do
       assert_patch(index_live, ~p"/")
 
       html = render(index_live)
-      assert html =~ "Post created successfully"
+      assert html =~ "Piu created successfully"
       assert html =~ "some body"
     end
 
@@ -58,7 +53,7 @@ defmodule SabiaWeb.PostLiveTest do
     test "displays post", %{conn: conn, post: post} do
       {:ok, _show_live, html} = live(conn, ~p"/piu/#{post}")
 
-      assert html =~ "Show Post"
+      assert html =~ "Piu #{post.id}"
       assert html =~ post.body
     end
   end

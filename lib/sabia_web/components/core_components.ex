@@ -553,7 +553,7 @@ defmodule SabiaWeb.CoreComponents do
 
   ## Examples
 
-      <.back navigate={~p"/"}>Back to posts</.back>
+      <.back navigate={~p"/"}>Back to feed</.back>
   """
   attr :navigate, :any, required: true
   slot :inner_block, required: true

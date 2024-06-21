@@ -1,12 +1,11 @@
-<.header>
-  Listing Posts
-  <:actions>
-    <.link patch={~p"/piu/new"}>
-      <.button>New Post</.button>
-    </.link>
-  </:actions>
-</.header>
+<.live_component
+  :if={@current_user}
+  module={SabiaWeb.PostLive.FormComponent}
+  id="new_post"
+  post={@post}
+/>
 
+<.header>Feed</.header>
 <.table
   id="posts"
   rows={@streams.posts}
@@ -28,14 +27,3 @@
     </.link>
   </:action>
 </.table>
-
-<.modal :if={@live_action == :new} id="post-modal" show on_cancel={JS.patch(~p"/")}>
-  <.live_component
-    module={SabiaWeb.PostLive.FormComponent}
-    id={@post.id || :new}
-    title={@page_title}
-    action={@live_action}
-    post={@post}
-    patch={~p"/"}
-  />
-</.modal>

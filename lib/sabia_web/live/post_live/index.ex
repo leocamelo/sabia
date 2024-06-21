@@ -6,25 +6,15 @@ defmodule SabiaWeb.PostLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :posts, Feed.list_posts())}
+    {:ok,
+     socket
+     |> assign(:page_title, "Feed")
+     |> stream(:posts, Feed.list_posts())
+     |> maybe_assign_post}
   end
 
   @impl true
-  def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
-  end
-
-  defp apply_action(socket, :new, _params) do
-    socket
-    |> assign(:page_title, "New Post")
-    |> assign(:post, %Post{user_id: socket.assigns.current_user.id})
-  end
-
-  defp apply_action(socket, :index, _params) do
-    socket
-    |> assign(:page_title, "Listing Posts")
-    |> assign(:post, nil)
-  end
+  def handle_params(_params, _url, socket), do: {:noreply, socket}
 
   @impl true
   def handle_info({SabiaWeb.PostLive.FormComponent, {:saved, post}}, socket) do
@@ -37,5 +27,13 @@ defmodule SabiaWeb.PostLive.Index do
     {:ok, _} = Feed.delete_post(post)
 
     {:noreply, stream_delete(socket, :posts, post)}
+  end
+
+  defp maybe_assign_post(socket) do
+    if user = socket.assigns.current_user do
+      assign(socket, :post, %Post{user_id: user.id})
+    else
+      socket
+    end
   end
 end

@@ -53,8 +53,6 @@ defmodule SabiaWeb.Router do
       on_mount: [{SabiaWeb.UserAuth, :ensure_authenticated}] do
       live "/settings", UserSettingsLive, :edit
       live "/settings/confirm-email/:token", UserSettingsLive, :confirm_email
-
-      live "/piu/new", PostLive.Index, :new
     end
   end
 
@@ -68,8 +66,8 @@ defmodule SabiaWeb.Router do
       live "/confirm/:token", UserConfirmationLive, :edit
       live "/confirm", UserConfirmationInstructionsLive, :new
 
-      live "/", PostLive.Index, :index
-      live "/piu/:id", PostLive.Show, :show
+      live "/", PostLive.Index
+      live "/piu/:id", PostLive.Show
     end
   end
 end

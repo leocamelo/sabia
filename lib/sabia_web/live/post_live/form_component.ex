@@ -8,7 +8,7 @@ defmodule SabiaWeb.PostLive.FormComponent do
     ~H"""
     <div>
       <.header>
-        <%= @title %>
+        New post
         <:subtitle>Use this form to manage post records in your database.</:subtitle>
       </.header>
 
@@ -21,7 +21,7 @@ defmodule SabiaWeb.PostLive.FormComponent do
       >
         <.input field={@form[:body]} type="text" label="Body" />
         <:actions>
-          <.button phx-disable-with="Saving...">Save Post</.button>
+          <.button phx-disable-with="Saving...">Save Piu</.button>
         </:actions>
       </.simple_form>
     </div>
@@ -55,8 +55,8 @@ defmodule SabiaWeb.PostLive.FormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Post created successfully")
-         |> push_patch(to: socket.assigns.patch)}
+         |> put_flash(:info, "Piu created successfully")
+         |> push_patch(to: ~p"/")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
