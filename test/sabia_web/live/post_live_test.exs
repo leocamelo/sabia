@@ -53,7 +53,7 @@ defmodule SabiaWeb.PostLiveTest do
     test "displays post", %{conn: conn, post: post} do
       {:ok, _show_live, html} = live(conn, ~p"/piu/#{post}")
 
-      assert html =~ "Piu #{post.id}"
+      assert html =~ "Piu from #{post.user_id}"
       assert html =~ post.body
     end
   end

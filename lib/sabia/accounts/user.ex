@@ -14,6 +14,8 @@ defmodule Sabia.Accounts.User do
     field :confirmed_at, :naive_datetime
 
     timestamps(type: :utc_datetime)
+
+    has_many :posts, Sabia.Feed.Post
   end
 
   @doc """

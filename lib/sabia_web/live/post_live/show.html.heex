@@ -1,11 +1,8 @@
 <.header>
-  Piu <%= @post.id %>
-  <:subtitle>This is a post record from your database.</:subtitle>
+  Piu from <%= @post.user_id %>
 </.header>
 
-<.list>
-  <:item title="Body"><%= @post.body %></:item>
-  <:item title="Likes count"><%= @post.likes_count %></:item>
-</.list>
+<p class="my-6"><%= @post.body %></p>
+<p>Likes: <%= @post.likes_count %></p>
 
 <.back navigate={~p"/"}>Back to feed</.back>

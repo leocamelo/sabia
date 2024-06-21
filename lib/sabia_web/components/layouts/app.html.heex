@@ -2,26 +2,26 @@
   <div class="flex items-center justify-between border-b border-zinc-100 py-3 text-sm">
     <%= if @current_user do %>
       <div class="flex items-center gap-4">
-        <a href={~p"/"}><img src={~p"/images/logo.svg"} width="36" /></a>
+        <.link href={~p"/"}><img src={~p"/images/logo.svg"} width="36" /></.link>
         <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
           @<%= @current_user.username %>
         </p>
       </div>
       <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
-        <a href={~p"/"} class="hover:text-zinc-700">Feed</a>
-        <a href={~p"/settings"} class="hover:text-zinc-700">Settings</a>
-        <a href={~p"/logout"} class="hover:text-zinc-700">Log out</a>
+        <.link href={~p"/"} class="hover:text-zinc-700">Feed</.link>
+        <.link href={~p"/settings"} class="hover:text-zinc-700">Settings</.link>
+        <.link href={~p"/logout"} method="delete" class="hover:text-zinc-700">Log out</.link>
       </div>
     <% else %>
       <div class="flex items-center gap-4">
-        <a href={~p"/"}><img src={~p"/images/logo.svg"} width="36" /></a>
+        <.link href={~p"/"}><img src={~p"/images/logo.svg"} width="36" /></.link>
       </div>
       <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
-        <a href={~p"/"} class="hover:text-zinc-700">Feed</a>
-        <a href={~p"/login"} class="hover:text-zinc-700">Log in</a>
-        <a href={~p"/signup"} class="rounded-lg bg-zinc-100 px-2 py-1 hover:bg-zinc-200/80">
+        <.link href={~p"/"} class="hover:text-zinc-700">Feed</.link>
+        <.link href={~p"/login"} class="hover:text-zinc-700">Log in</.link>
+        <.link href={~p"/signup"} class="rounded-lg bg-zinc-100 px-2 py-1 hover:bg-zinc-200/80">
           Sign up
-        </a>
+        </.link>
       </div>
     <% end %>
   </div>

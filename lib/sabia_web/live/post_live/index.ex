@@ -14,7 +14,9 @@ defmodule SabiaWeb.PostLive.Index do
   end
 
   @impl true
-  def handle_params(_params, _url, socket), do: {:noreply, socket}
+  def handle_params(_params, _url, socket) do
+    {:noreply, socket}
+  end
 
   @impl true
   def handle_info({SabiaWeb.PostLive.FormComponent, {:saved, post}}, socket) do

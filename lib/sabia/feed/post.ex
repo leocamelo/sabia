@@ -8,9 +8,10 @@ defmodule Sabia.Feed.Post do
   schema "posts" do
     field :body, :string
     field :likes_count, :integer, default: 0
-    field :user_id, :binary_id
 
     timestamps(type: :utc_datetime)
+
+    belongs_to :user, Sabia.Accounts.User
   end
 
   @doc false

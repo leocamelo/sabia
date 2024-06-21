@@ -35,7 +35,9 @@ defmodule Sabia.Feed do
       ** (Ecto.NoResultsError)
 
   """
-  def get_post!(id), do: Repo.get!(Post, id)
+  def get_post!(id) do
+    Repo.get!(Post, id)
+  end
 
   @doc """
   Creates a post.

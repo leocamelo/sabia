@@ -7,11 +7,6 @@ defmodule SabiaWeb.PostLive.FormComponent do
   def render(assigns) do
     ~H"""
     <div>
-      <.header>
-        New post
-        <:subtitle>Use this form to manage post records in your database.</:subtitle>
-      </.header>
-
       <.simple_form
         for={@form}
         id="post-form"
@@ -19,7 +14,7 @@ defmodule SabiaWeb.PostLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:body]} type="text" label="Body" />
+        <.input field={@form[:body]} type="textarea" label="New piu" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Piu</.button>
         </:actions>
