@@ -10,15 +10,17 @@ defmodule SabiaWeb.PostLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     if connected?(socket), do: Endpoint.subscribe(@topic)
-    {:ok, stream(socket, :posts, Feed.list_posts() |> Feed.preload_post_user())}
+
+    {:ok,
+     socket
+     |> assign(:page_title, "Feed")
+     |> maybe_assign_post
+     |> stream(:posts, Feed.list_posts() |> Feed.preload_post_user())}
   end
 
   @impl true
   def handle_params(_params, _url, socket) do
-    {:noreply,
-     socket
-     |> assign(:page_title, "Feed")
-     |> maybe_assign_post}
+    {:noreply, socket}
   end
 
   @impl true
@@ -30,14 +32,6 @@ defmodule SabiaWeb.PostLive.Index do
 
   def handle_info(%{event: "new_post", payload: post}, socket) do
     {:noreply, stream_new_post(socket, post)}
-  end
-
-  @impl true
-  def handle_event("delete", %{"id" => id}, socket) do
-    post = Feed.get_post!(id)
-    {:ok, _} = Feed.delete_post(post)
-
-    {:noreply, stream_delete(socket, :posts, post)}
   end
 
   defp stream_new_post(socket, post) do

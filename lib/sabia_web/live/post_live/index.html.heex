@@ -7,11 +7,12 @@
   <div :if={@current_user}>
     <.live_component module={SabiaWeb.PostLive.FormComponent} id="new-post" post={@post} />
   </div>
-  <div id="posts" phx-update="stream" class="pt-10">
-    <div
+  <div id="posts" phx-update="stream" class="pt-10 grid gap-4">
+    <.link
       :for={{id, post} <- @streams.posts}
       id={id}
-      class="rounded-lg p-4 pb-2 mb-3 border border-zinc-100"
+      href={~p"/fofoca/#{post}"}
+      class="rounded-lg p-4 pb-2 mb-3 border border-zinc-100 hover:border-brand"
     >
       <div class="flex flex-row">
         <div class="mr-4">
@@ -26,19 +27,12 @@
           </p>
         </div>
       </div>
-      <div class="border-t border-zinc-100 pt-2 mt-3">
+      <div class="pt-2 mt-3">
         <button class="text-zinc-500 px-2 py-1 rounded-lg hover:bg-rose-100">
           <.icon name="hero-heart" class="h-5 w-5" />
           <%= post.likes_count %>
         </button>
       </div>
-      <.link
-        :if={@current_user && @current_user.id == post.user_id}
-        phx-click={JS.push("delete", value: %{id: post.id}) |> hide("##{id}")}
-        data-confirm="Are you sure?"
-      >
-        Delete
-      </.link>
-    </div>
+    </.link>
   </div>
 </div>

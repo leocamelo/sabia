@@ -1,8 +1,16 @@
 <.header>
-  Fofoca from <%= @post.user_id %>
+  Fofoca from <%= @post.user.username %>
 </.header>
 
 <p class="my-6"><%= @post.body %></p>
-<p>Likes: <%= @post.likes_count %></p>
-
-<.back navigate={~p"/"}>Back to feed</.back>
+<p class="text-zinc-500">Likes: <%= @post.likes_count %></p>
+<div :if={@current_user && @current_user.id == @post.user_id} class="mt-6">
+  <.link
+    phx-click="delete"
+    phx-value-id={@post.id}
+    data-confirm="Are you sure?"
+    class="text-red-500 hover:text-red-700"
+  >
+    Delete
+  </.link>
+</div>
