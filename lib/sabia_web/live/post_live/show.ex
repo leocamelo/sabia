@@ -15,7 +15,8 @@ defmodule SabiaWeb.PostLive.Show do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    {:ok, _} = Feed.delete_post(%Feed.Post{id: id})
+    {:ok, post} = Feed.delete_post(%Feed.Post{id: id})
+    Feed.broadcast(:deleted, post)
 
     {:noreply,
      socket

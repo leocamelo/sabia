@@ -55,8 +55,9 @@ defmodule SabiaWeb.PostLive.FormComponent do
 
         {:noreply,
          socket
+         |> assign_form(Feed.change_post(socket.assigns.post))
          |> put_flash(:info, "Fofoca created successfully")
-         |> push_navigate(to: ~p"/", replace: true)}
+         |> push_patch(to: ~p"/")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}

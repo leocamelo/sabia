@@ -32,10 +32,10 @@ defmodule SabiaWeb.PostLiveTest do
              |> form("#post-form", post: @create_attrs)
              |> render_submit()
 
-      flash = assert_redirect(index_live, ~p"/")
-      assert flash["info"] =~ "Fofoca created successfully"
+      assert_patch(index_live, ~p"/")
 
-      {:ok, _index_live, html} = live(conn, ~p"/")
+      html = render(index_live)
+      assert html =~ "Fofoca created successfully"
       assert html =~ "some body"
     end
   end

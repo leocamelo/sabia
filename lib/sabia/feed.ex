@@ -89,4 +89,20 @@ defmodule Sabia.Feed do
   def preload_post_user(posts_or_post) do
     Repo.preload(posts_or_post, :user)
   end
+
+  def inc_post_likes(%Post{id: id}) do
+    {1, [post]} =
+      from(p in Post, where: p.id == ^id, select: p)
+      |> Repo.update_all(inc: [likes_count: 1])
+
+    post
+  end
+
+  def subscribe do
+    Phoenix.PubSub.subscribe(Sabia.PubSub, "feed")
+  end
+
+  def broadcast(event, post) do
+    Phoenix.PubSub.broadcast(Sabia.PubSub, "feed", {__MODULE__, {event, post}})
+  end
 end
