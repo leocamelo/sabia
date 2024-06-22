@@ -3,6 +3,8 @@
     <%= if @current_user do %>
       <div class="flex items-center gap-4">
         <.link href={~p"/"}><img src={~p"/images/logo.svg"} width="36" /></.link>
+        <.icon name="hero-heart-mini text-brand" />
+        <.gravatar email={@current_user.email} size={24} />
         <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
           @<%= @current_user.username %>
         </p>

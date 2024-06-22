@@ -1,33 +1,44 @@
-<.header>
+<.header class="text-center">
   Feed
+  <:subtitle>Get in touch about all the fofocas</:subtitle>
 </.header>
 
-<.live_component
-  :if={@current_user}
-  module={SabiaWeb.PostLive.FormComponent}
-  id="new_post"
-  post={@post}
-/>
-
-<.table
-  id="posts"
-  rows={@streams.posts}
-  row_click={fn {_id, post} -> JS.navigate(~p"/piu/#{post}") end}
->
-  <:col :let={{_id, post}} label="Piu"><%= post.body %></:col>
-  <:col :let={{_id, post}} label="Likes"><%= post.likes_count %></:col>
-  <:action :let={{_id, post}}>
-    <div class="sr-only">
-      <.link navigate={~p"/piu/#{post}"}>Show</.link>
-    </div>
-  </:action>
-  <:action :let={{id, post}}>
-    <.link
-      :if={@current_user && @current_user.id == post.user_id}
-      phx-click={JS.push("delete", value: %{id: post.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
+<div class="space-y-12 divide-y">
+  <div :if={@current_user}>
+    <.live_component module={SabiaWeb.PostLive.FormComponent} id="new-post" post={@post} />
+  </div>
+  <div id="posts" phx-update="stream" class="pt-10">
+    <div
+      :for={{id, post} <- @streams.posts}
+      id={id}
+      class="rounded-lg p-4 pb-2 mb-3 border border-zinc-100"
     >
-      Delete
-    </.link>
-  </:action>
-</.table>
+      <div class="flex flex-row">
+        <div class="mr-4">
+          <.gravatar email={post.user.email} alt={post.user.username} />
+        </div>
+        <div>
+          <h5 class="mb-2 font-medium leading-tight text-zinc-700">
+            @<%= post.user.username %>
+          </h5>
+          <p class="text-base text-zinc-900">
+            <%= post.body %>
+          </p>
+        </div>
+      </div>
+      <div class="border-t border-zinc-100 pt-2 mt-3">
+        <button class="text-zinc-500 px-2 py-1 rounded-lg hover:bg-rose-100">
+          <.icon name="hero-heart" class="h-5 w-5" />
+          <%= post.likes_count %>
+        </button>
+      </div>
+      <.link
+        :if={@current_user && @current_user.id == post.user_id}
+        phx-click={JS.push("delete", value: %{id: post.id}) |> hide("##{id}")}
+        data-confirm="Are you sure?"
+      >
+        Delete
+      </.link>
+    </div>
+  </div>
+</div>

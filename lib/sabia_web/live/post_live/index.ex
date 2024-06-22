@@ -3,24 +3,33 @@ defmodule SabiaWeb.PostLive.Index do
 
   alias Sabia.Feed
   alias Sabia.Feed.Post
+  alias SabiaWeb.Endpoint
+
+  @topic "feed"
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok,
-     socket
-     |> assign(:page_title, "Feed")
-     |> stream(:posts, Feed.list_posts())
-     |> maybe_assign_post}
+    if connected?(socket), do: Endpoint.subscribe(@topic)
+    {:ok, stream(socket, :posts, Feed.list_posts() |> Feed.preload_post_user())}
   end
 
   @impl true
   def handle_params(_params, _url, socket) do
-    {:noreply, socket}
+    {:noreply,
+     socket
+     |> assign(:page_title, "Feed")
+     |> maybe_assign_post}
   end
 
   @impl true
   def handle_info({SabiaWeb.PostLive.FormComponent, {:saved, post}}, socket) do
-    {:noreply, stream_insert(socket, :posts, post)}
+    post = Feed.preload_post_user(post)
+    Endpoint.broadcast(@topic, "new_post", post)
+    {:noreply, stream_new_post(socket, post)}
+  end
+
+  def handle_info(%{event: "new_post", payload: post}, socket) do
+    {:noreply, stream_new_post(socket, post)}
   end
 
   @impl true
@@ -29,6 +38,10 @@ defmodule SabiaWeb.PostLive.Index do
     {:ok, _} = Feed.delete_post(post)
 
     {:noreply, stream_delete(socket, :posts, post)}
+  end
+
+  defp stream_new_post(socket, post) do
+    stream_insert(socket, :posts, post, at: 0)
   end
 
   defp maybe_assign_post(socket) do

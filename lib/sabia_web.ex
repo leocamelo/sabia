@@ -85,6 +85,7 @@ defmodule SabiaWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import SabiaWeb.CoreComponents
+      import SabiaWeb.MyComponents
       import SabiaWeb.Gettext
 
       # Shortcut for generating JS commands

@@ -35,7 +35,7 @@ defmodule SabiaWeb.PostLiveTest do
       assert_patch(index_live, ~p"/")
 
       html = render(index_live)
-      assert html =~ "Piu created successfully"
+      assert html =~ "Fofoca created successfully"
       assert html =~ "some body"
     end
 
@@ -51,9 +51,9 @@ defmodule SabiaWeb.PostLiveTest do
     setup [:register_and_log_in_user, :create_post]
 
     test "displays post", %{conn: conn, post: post} do
-      {:ok, _show_live, html} = live(conn, ~p"/piu/#{post}")
+      {:ok, _show_live, html} = live(conn, ~p"/fofoca/#{post}")
 
-      assert html =~ "Piu from #{post.user_id}"
+      assert html =~ "Fofoca from #{post.user_id}"
       assert html =~ post.body
     end
   end

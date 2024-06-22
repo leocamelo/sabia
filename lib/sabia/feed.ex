@@ -18,7 +18,7 @@ defmodule Sabia.Feed do
 
   """
   def list_posts do
-    Repo.all(Post)
+    Repo.all(from p in Post, order_by: [desc: p.inserted_at])
   end
 
   @doc """
@@ -84,5 +84,9 @@ defmodule Sabia.Feed do
   """
   def change_post(%Post{} = post, attrs \\ %{}) do
     Post.changeset(post, attrs)
+  end
+
+  def preload_post_user(posts_or_post) do
+    Repo.preload(posts_or_post, :user)
   end
 end

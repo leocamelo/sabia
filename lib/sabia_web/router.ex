@@ -67,7 +67,7 @@ defmodule SabiaWeb.Router do
       live "/confirm", UserConfirmationInstructionsLive, :new
 
       live "/", PostLive.Index
-      live "/piu/:id", PostLive.Show
+      live "/fofoca/:id", PostLive.Show
     end
   end
 end

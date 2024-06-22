@@ -14,9 +14,14 @@ defmodule SabiaWeb.PostLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:body]} type="textarea" label="New piu" />
+        <.input
+          field={@form[:body]}
+          type="textarea"
+          label="New fofoca"
+          placeholder="What is happening?!"
+        />
         <:actions>
-          <.button phx-disable-with="Saving...">Save Piu</.button>
+          <.button phx-disable-with="Saving...">Post</.button>
         </:actions>
       </.simple_form>
     </div>
@@ -50,7 +55,8 @@ defmodule SabiaWeb.PostLive.FormComponent do
 
         {:noreply,
          socket
-         |> put_flash(:info, "Piu created successfully")
+         |> assign_form(Feed.change_post(socket.assigns.post))
+         |> put_flash(:info, "Fofoca created successfully")
          |> push_patch(to: ~p"/")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
