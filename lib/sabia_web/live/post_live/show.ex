@@ -24,18 +24,27 @@ defmodule SabiaWeb.PostLive.Show do
     {:noreply, assign(socket, :post, post)}
   end
 
+  def handle_info({Feed, {:deleted, _post}}, socket) do
+    {:noreply,
+     socket
+     |> put_flash(:error, "Fofoca deleted by author")
+     |> push_navigate(to: ~p"/", replace: true)}
+  end
+
   @impl true
   def handle_event("like", %{"id" => id}, socket) do
-    post =
-      Feed.inc_post_likes(%Post{id: id})
-      |> Feed.preload_post_user()
+    {:ok, post} = Feed.inc_post_likes(%Post{id: id})
+    post = Feed.preload_post_user(post)
 
     Feed.broadcast(:saved, post)
     {:noreply, assign(socket, :post, post)}
   end
 
   def handle_event("delete", %{"id" => id}, socket) do
-    {:ok, post} = Feed.delete_post(%Post{id: id})
+    {:ok, post} =
+      socket.assigns.current_user.id
+      |> Feed.delete_post(%Post{id: id})
+
     Feed.broadcast(:deleted, post)
 
     {:noreply,

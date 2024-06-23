@@ -34,10 +34,10 @@ defmodule Sabia.FeedTest do
       assert {:error, %Ecto.Changeset{}} = Feed.create_post(user.id, @invalid_attrs)
     end
 
-    test "delete_post/1 deletes the post" do
+    test "delete_post/2 deletes the post" do
       user = user_fixture()
       post = post_fixture(user.id)
-      assert {:ok, %Post{}} = Feed.delete_post(post)
+      assert {:ok, %Post{}} = Feed.delete_post(user.id, post)
       assert_raise Ecto.NoResultsError, fn -> Feed.get_post!(post.id) end
     end
 
@@ -50,7 +50,7 @@ defmodule Sabia.FeedTest do
     test "inc_post_likes/1 increments post likes count" do
       user = user_fixture()
       post1 = post_fixture(user.id)
-      post2 = Feed.inc_post_likes(post1)
+      {:ok, post2} = Feed.inc_post_likes(post1)
       assert_in_delta(post1.likes_count, post2.likes_count, 1)
     end
   end

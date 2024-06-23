@@ -62,15 +62,33 @@ defmodule Sabia.Feed do
 
   ## Examples
 
-      iex> delete_post(post)
+      iex> delete_post(user_id, post)
       {:ok, %Post{}}
 
-      iex> delete_post(post)
-      {:error, %Ecto.Changeset{}}
+  """
+  def delete_post(user_id, %Post{id: id}) do
+    {1, [post]} =
+      from(p in Post, where: p.id == ^id and p.user_id == ^user_id, select: p)
+      |> Repo.delete_all()
+
+    {:ok, post}
+  end
+
+  @doc """
+  Increments a post likes count.
+
+  ## Examples
+
+      iex> inc_post_likes(post)
+      {:ok, %Post{}}
 
   """
-  def delete_post(%Post{} = post) do
-    Repo.delete(post)
+  def inc_post_likes(%Post{id: id}) do
+    {1, [post]} =
+      from(p in Post, where: p.id == ^id, select: p)
+      |> Repo.update_all(inc: [likes_count: 1])
+
+    {:ok, post}
   end
 
   @doc """
@@ -86,22 +104,23 @@ defmodule Sabia.Feed do
     Post.changeset(post, attrs)
   end
 
-  def preload_post_user(posts_or_post) do
-    Repo.preload(posts_or_post, :user)
+  @doc """
+  Preloads a post (or collection of posts) user association.
+
+      iex> preload_post_user(post)
+      %Post{user: %User{}}
+
+  """
+  def preload_post_user(post_or_posts) do
+    Repo.preload(post_or_posts, :user)
   end
 
-  def inc_post_likes(%Post{id: id}) do
-    {1, [post]} =
-      from(p in Post, where: p.id == ^id, select: p)
-      |> Repo.update_all(inc: [likes_count: 1])
-
-    post
-  end
-
+  @doc false
   def subscribe do
     Phoenix.PubSub.subscribe(Sabia.PubSub, "feed")
   end
 
+  @doc false
   def broadcast(event, post) do
     Phoenix.PubSub.broadcast(Sabia.PubSub, "feed", {__MODULE__, {event, post}})
   end
