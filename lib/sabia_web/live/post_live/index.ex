@@ -26,7 +26,7 @@ defmodule SabiaWeb.PostLive.Index do
 
   @impl true
   def handle_info({SabiaWeb.PostLive.FormComponent, {:saved, post}}, socket) do
-    {:noreply, broadcast_post(socket, post)}
+    {:noreply, broadcast_post(socket, %{post | user: socket.assigns.current_user})}
   end
 
   def handle_info({Feed, {:saved, post}}, socket) do
@@ -40,11 +40,10 @@ defmodule SabiaWeb.PostLive.Index do
   @impl true
   def handle_event("like", %{"id" => id}, socket) do
     {:ok, post} = Feed.inc_post_likes(%Post{id: id})
-    {:noreply, broadcast_post(socket, post)}
+    {:noreply, broadcast_post(socket, Feed.preload_post_user(post))}
   end
 
   defp broadcast_post(socket, post) do
-    post = Feed.preload_post_user(post)
     Feed.broadcast(:saved, post)
     stream_post(socket, post)
   end
