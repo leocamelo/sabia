@@ -11,7 +11,7 @@ defmodule SabiaWeb.PostLive.Index do
     {:ok,
      socket
      |> assign(:page_title, "Feed")
-     |> maybe_assign_post
+     |> maybe_assign_new_post
      |> stream(:posts, Feed.list_posts() |> Feed.preload_post_user())}
   end
 
@@ -35,8 +35,7 @@ defmodule SabiaWeb.PostLive.Index do
 
   @impl true
   def handle_event("like", %{"id" => id}, socket) do
-    post = Feed.inc_post_likes(%Post{id: id})
-    {:noreply, broadcast_post(socket, post)}
+    {:noreply, broadcast_post(socket, Feed.inc_post_likes(id))}
   end
 
   defp broadcast_post(socket, post) do
@@ -49,9 +48,9 @@ defmodule SabiaWeb.PostLive.Index do
     stream_insert(socket, :posts, post, at: 0)
   end
 
-  defp maybe_assign_post(socket) do
+  defp maybe_assign_new_post(socket) do
     if user = socket.assigns.current_user do
-      assign(socket, :post, %Post{user_id: user.id})
+      assign(socket, :new_post, %Post{user_id: user.id})
     else
       socket
     end

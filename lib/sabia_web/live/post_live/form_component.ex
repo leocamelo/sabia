@@ -51,7 +51,7 @@ defmodule SabiaWeb.PostLive.FormComponent do
   def handle_event("save", %{"post" => post_params}, socket) do
     case Feed.create_post(socket.assigns.post.user_id, post_params) do
       {:ok, post} ->
-        notify_parent({:saved, post})
+        send(self(), {__MODULE__, {:saved, post}})
 
         {:noreply,
          socket
@@ -67,6 +67,4 @@ defmodule SabiaWeb.PostLive.FormComponent do
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
     assign(socket, :form, to_form(changeset))
   end
-
-  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 end

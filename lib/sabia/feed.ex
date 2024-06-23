@@ -90,9 +90,9 @@ defmodule Sabia.Feed do
     Repo.preload(posts_or_post, :user)
   end
 
-  def inc_post_likes(%Post{id: id}) do
+  def inc_post_likes(post_id) do
     {1, [post]} =
-      from(p in Post, where: p.id == ^id, select: p)
+      from(p in Post, where: p.id == ^post_id, select: p)
       |> Repo.update_all(inc: [likes_count: 1])
 
     post

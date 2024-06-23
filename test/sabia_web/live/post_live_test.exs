@@ -38,6 +38,17 @@ defmodule SabiaWeb.PostLiveTest do
       assert html =~ "Fofoca created successfully"
       assert html =~ "some body"
     end
+
+    test "likes a post", %{conn: conn, post: post} do
+      {:ok, index_live, _html} = live(conn, ~p"/")
+
+      like_button =
+        index_live
+        |> element("#posts-#{post.id} button[phx-click=\"like\"]")
+
+      assert render(like_button) =~ ~r{>\s*0\s*</button>}
+      assert render_click(like_button) =~ ~r{>\s*1\s*</button>}
+    end
   end
 
   describe "Show" do

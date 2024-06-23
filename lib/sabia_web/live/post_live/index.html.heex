@@ -5,12 +5,12 @@
 
 <div class="space-y-12 divide-y">
   <div :if={@current_user}>
-    <.live_component module={SabiaWeb.PostLive.FormComponent} id="new-post" post={@post} />
+    <.live_component module={SabiaWeb.PostLive.FormComponent} id="new-post" post={@new_post} />
   </div>
   <div id="posts" phx-update="stream" class="pt-10 grid gap-4">
     <div
-      :for={{id, post} <- @streams.posts}
-      id={id}
+      :for={{dom_id, post} <- @streams.posts}
+      id={dom_id}
       class="group relative rounded-lg p-4 pb-2 mb-3 border border-zinc-100"
     >
       <div class="flex flex-row">

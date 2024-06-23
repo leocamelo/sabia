@@ -25,7 +25,6 @@ defmodule Sabia.FeedTest do
     test "create_post/1 with valid data creates a post" do
       user = user_fixture()
       valid_attrs = %{body: "some body"}
-
       assert {:ok, %Post{} = post} = Feed.create_post(user.id, valid_attrs)
       assert post.body == "some body"
     end
@@ -46,6 +45,13 @@ defmodule Sabia.FeedTest do
       user = user_fixture()
       post = post_fixture(user.id)
       assert %Ecto.Changeset{} = Feed.change_post(post)
+    end
+
+    test "inc_post_likes/1 increments post likes count" do
+      user = user_fixture()
+      post1 = post_fixture(user.id)
+      post2 = Feed.inc_post_likes(post1.id)
+      assert_in_delta(post1.likes_count, post2.likes_count, 1)
     end
   end
 end
