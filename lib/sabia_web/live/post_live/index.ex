@@ -6,7 +6,7 @@ defmodule SabiaWeb.PostLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    if connected?(socket), do: Feed.subscribe()
+    if connected?(socket), do: Feed.subscribe_to_posts()
 
     posts =
       Feed.list_posts()
@@ -44,7 +44,7 @@ defmodule SabiaWeb.PostLive.Index do
   end
 
   defp broadcast_post(socket, post) do
-    Feed.broadcast(:saved, post)
+    Feed.broadcast_post(post, :saved)
     stream_post(socket, post)
   end
 

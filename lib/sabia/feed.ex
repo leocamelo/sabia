@@ -116,12 +116,21 @@ defmodule Sabia.Feed do
   end
 
   @doc false
-  def subscribe do
-    Phoenix.PubSub.subscribe(Sabia.PubSub, "feed")
+  def subscribe_to_posts(id \\ "feed") do
+    do_subscribe("posts:#{id}")
   end
 
   @doc false
-  def broadcast(event, post) do
-    Phoenix.PubSub.broadcast(Sabia.PubSub, "feed", {__MODULE__, {event, post}})
+  def broadcast_post(%Post{id: id} = post, event) do
+    do_broadcast("posts:feed", event, post)
+    do_broadcast("posts:#{id}", event, post)
+  end
+
+  defp do_subscribe(topic) do
+    Phoenix.PubSub.subscribe(Sabia.PubSub, topic)
+  end
+
+  defp do_broadcast(topic, event, post) do
+    Phoenix.PubSub.broadcast(Sabia.PubSub, topic, {__MODULE__, {event, post}})
   end
 end

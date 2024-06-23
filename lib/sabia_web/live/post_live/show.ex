@@ -6,7 +6,7 @@ defmodule SabiaWeb.PostLive.Show do
 
   @impl true
   def mount(%{"id" => id}, _session, socket) do
-    if connected?(socket), do: Feed.subscribe()
+    if connected?(socket), do: Feed.subscribe_to_posts(id)
 
     post =
       Feed.get_post!(id)
@@ -36,7 +36,7 @@ defmodule SabiaWeb.PostLive.Show do
     {:ok, post} = Feed.inc_post_likes(%Post{id: id})
     post = Feed.preload_post_user(post)
 
-    Feed.broadcast(:saved, post)
+    Feed.broadcast_post(post, :saved)
     {:noreply, assign(socket, :post, post)}
   end
 
@@ -45,7 +45,7 @@ defmodule SabiaWeb.PostLive.Show do
       socket.assigns.current_user.id
       |> Feed.delete_post(%Post{id: id})
 
-    Feed.broadcast(:deleted, post)
+    Feed.broadcast_post(post, :deleted)
 
     {:noreply,
      socket
