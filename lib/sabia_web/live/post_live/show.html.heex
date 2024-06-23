@@ -1,10 +1,6 @@
 <.header class="text-center mb-10">
-  Fofoca
+  <%= @page_title %>
   <:subtitle>ID: <%= @post.id %></:subtitle>
 </.header>
 
-<SabiaWeb.PostLive.PostComponent.post
-  post={@post}
-  deletable={@current_user && @current_user.id == @post.user_id}
-  linkable={false}
-/>
+<SabiaWeb.PostLive.PostComponent.post post={@post} deletable={@current_author} linkable={false} />

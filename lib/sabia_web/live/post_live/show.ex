@@ -14,8 +14,9 @@ defmodule SabiaWeb.PostLive.Show do
 
     {:ok,
      socket
-     |> assign(:page_title, "Fofoca from #{post.user.username}")
-     |> assign(:post, post)}
+     |> assign(:post, post)
+     |> assign_current_author()
+     |> assign_page_title()}
   end
 
   @impl true
@@ -41,5 +42,21 @@ defmodule SabiaWeb.PostLive.Show do
      socket
      |> put_flash(:info, "Fofoca deleted successfully")
      |> push_navigate(to: ~p"/", replace: true)}
+  end
+
+  defp assign_current_author(socket) do
+    if user = socket.assigns.current_user do
+      assign(socket, :current_author, user.id == socket.assigns.post.user_id)
+    else
+      assign(socket, :current_author, false)
+    end
+  end
+
+  defp assign_page_title(socket) do
+    if socket.assigns.current_author do
+      assign(socket, :page_title, "Your fofoca")
+    else
+      assign(socket, :page_title, "Fofoca")
+    end
   end
 end
