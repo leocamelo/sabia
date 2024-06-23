@@ -1,16 +1,10 @@
-<.header>
-  Fofoca from <%= @post.user.username %>
+<.header class="text-center mb-10">
+  Fofoca
+  <:subtitle>ID: <%= @post.id %></:subtitle>
 </.header>
 
-<p class="my-6"><%= @post.body %></p>
-<p class="text-zinc-500">Likes: <%= @post.likes_count %></p>
-<div :if={@current_user && @current_user.id == @post.user_id} class="mt-6">
-  <.link
-    phx-click="delete"
-    phx-value-id={@post.id}
-    data-confirm="Are you sure?"
-    class="text-red-500 hover:text-red-700"
-  >
-    Delete
-  </.link>
-</div>
+<SabiaWeb.PostLive.PostComponent.post
+  post={@post}
+  deletable={@current_user && @current_user.id == @post.user_id}
+  linkable={false}
+/>

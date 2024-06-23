@@ -35,7 +35,8 @@ defmodule SabiaWeb.PostLive.Index do
 
   @impl true
   def handle_event("like", %{"id" => id}, socket) do
-    {:noreply, broadcast_post(socket, Feed.inc_post_likes(id))}
+    post = Feed.inc_post_likes(%Post{id: id})
+    {:noreply, broadcast_post(socket, post)}
   end
 
   defp broadcast_post(socket, post) do

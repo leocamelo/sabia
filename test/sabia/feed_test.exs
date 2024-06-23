@@ -50,7 +50,7 @@ defmodule Sabia.FeedTest do
     test "inc_post_likes/1 increments post likes count" do
       user = user_fixture()
       post1 = post_fixture(user.id)
-      post2 = Feed.inc_post_likes(post1.id)
+      post2 = Feed.inc_post_likes(post1)
       assert_in_delta(post1.likes_count, post2.likes_count, 1)
     end
   end
