@@ -21,27 +21,30 @@ defmodule SabiaWeb.PostLive.PostComponent do
           </p>
         </div>
       </div>
-      <div class="pt-2 mt-3">
+      <div class="flex flex-row justify-between pt-2 mt-3">
         <button
+          title="Like"
           phx-click="like"
           phx-value-id={@post.id}
-          class="text-zinc-500 px-2 py-1 rounded-lg hover:bg-rose-100"
+          class="text-zinc-500 px-2 py-1 rounded-lg hover:text-rose-700 hover:bg-rose-100"
         >
           <.icon name="hero-heart" class="h-5 w-5" />
           <%= @post.likes_count %>
         </button>
         <button
           :if={@deletable}
+          title="Delete"
           phx-click="delete"
           phx-value-id={@post.id}
           data-confirm="Are you sure?"
-          class="text-red-500 hover:text-red-700"
+          class="hidden group-hover:block text-red-500 px-2 py-1 rounded-lg hover:text-red-700 hover:bg-red-100"
         >
-          Delete
+          <.icon name="hero-trash" class="h-5 w-5" />
         </button>
       </div>
       <.link
         :if={@linkable}
+        title="Link"
         href={~p"/fofoca/#{@post}"}
         class="hidden group-hover:block absolute top-2 right-2 text-zinc-400 hover:text-brand"
       >
