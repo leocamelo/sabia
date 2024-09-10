@@ -75,13 +75,13 @@ defmodule SabiaWeb.UserLoginLiveTest do
     } do
       {:ok, lv, _html} = live(conn, ~p"/login")
 
-      {:ok, conn} =
+      {:ok, _forgot_live, forgot_html} =
         lv
         |> element(~s|main a:fl-contains("Forgot your password?")|)
         |> render_click()
         |> follow_redirect(conn, ~p"/reset-password")
 
-      assert conn.resp_body =~ "Forgot your password?"
+      assert forgot_html =~ "Forgot your password?"
     end
   end
 end

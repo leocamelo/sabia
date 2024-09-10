@@ -7,7 +7,7 @@ defmodule SabiaWeb.MyComponents do
 
   def gravatar(assigns) do
     email = String.downcase(String.trim(assigns.email))
-    email_hash = Base.encode64(:crypto.hash(:sha256, email))
+    email_hash = Base.encode16(:crypto.hash(:sha256, email), case: :lower)
 
     assigns = assign(assigns, :email_hash, email_hash)
 

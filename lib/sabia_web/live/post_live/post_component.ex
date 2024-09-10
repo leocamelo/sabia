@@ -69,7 +69,7 @@ defmodule SabiaWeb.PostLive.PostComponent do
     ~H"""
     <.link
       title="Link"
-      href={~p"/fofoca/#{@post_id}"}
+      navigate={~p"/fofoca/#{@post_id}"}
       class="hidden group-hover:block absolute top-2 right-2 text-zinc-400 hover:text-brand"
     >
       <.icon name="hero-link-mini" />
