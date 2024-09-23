@@ -59,8 +59,6 @@ defmodule SabiaWeb.Router do
   scope "/", SabiaWeb do
     pipe_through [:browser]
 
-    delete "/logout", UserSessionController, :delete
-
     live_session :current_user,
       on_mount: [{SabiaWeb.UserAuth, :mount_current_user}] do
       live "/confirm/:token", UserConfirmationLive, :edit
@@ -69,5 +67,7 @@ defmodule SabiaWeb.Router do
       live "/", PostLive.Index
       live "/fofoca/:id", PostLive.Show
     end
+
+    delete "/logout", UserSessionController, :delete
   end
 end

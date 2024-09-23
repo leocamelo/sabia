@@ -33,7 +33,7 @@ config :sabia, Sabia.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.23.1",
+  version: "0.24.0",
   sabia: [
     args:
       ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
@@ -43,7 +43,7 @@ config :esbuild,
 
 # Configure tailwind (the version is required)
 config :tailwind,
-  version: "3.4.10",
+  version: "3.4.12",
   sabia: [
     args:
       ~w(--config=tailwind.config.js --input=css/app.css --output=../priv/static/assets/app.css),
