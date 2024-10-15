@@ -5,6 +5,18 @@ defmodule SabiaWeb.PostLive.Show do
   alias Sabia.Feed.Post
 
   @impl true
+  def render(assigns) do
+    ~H"""
+    <.header class="text-center mb-10">
+      <%= @page_title %>
+      <:subtitle>ID: <%= @post.id %></:subtitle>
+    </.header>
+
+    <SabiaWeb.PostLive.PostComponent.post post={@post} deletable={@current_author} linkable={false} />
+    """
+  end
+
+  @impl true
   def mount(%{"id" => id}, _session, socket) do
     if connected?(socket), do: Feed.subscribe_to_posts(id)
 

@@ -9,13 +9,13 @@ module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/sabia_web.ex",
-    "../lib/sabia_web/**/*.*ex"
+    "../lib/sabia_web/**/*.*ex",
   ],
   theme: {
     extend: {
       colors: {
         brand: "#FD4F00",
-      }
+      },
     },
   },
   plugins: [
@@ -40,7 +40,7 @@ module.exports = {
         ["", "/24/outline"],
         ["-solid", "/24/solid"],
         ["-mini", "/20/solid"],
-        ["-micro", "/16/solid"]
+        ["-micro", "/16/solid"],
       ]
       icons.forEach(([suffix, dir]) => {
         fs.readdirSync(path.join(iconsDir, dir)).forEach(file => {
@@ -66,10 +66,10 @@ module.exports = {
             "vertical-align": "middle",
             "display": "inline-block",
             "width": size,
-            "height": size
+            "height": size,
           }
         }
       }, {values})
-    })
-  ]
+    }),
+  ],
 }

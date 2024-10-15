@@ -116,8 +116,8 @@ defmodule Sabia.Feed do
   end
 
   @doc false
-  def subscribe_to_posts(id \\ "feed") do
-    do_subscribe("posts:#{id}")
+  def subscribe_to_posts(subtopic \\ "feed") do
+    do_subscribe("posts:#{subtopic}")
   end
 
   @doc false

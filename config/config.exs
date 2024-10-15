@@ -43,7 +43,7 @@ config :esbuild,
 
 # Configure tailwind (the version is required)
 config :tailwind,
-  version: "3.4.12",
+  version: "3.4.14",
   sabia: [
     args:
       ~w(--config=tailwind.config.js --input=css/app.css --output=../priv/static/assets/app.css),
