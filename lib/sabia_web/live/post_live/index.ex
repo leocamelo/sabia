@@ -8,7 +8,7 @@ defmodule SabiaWeb.PostLive.Index do
   def render(assigns) do
     ~H"""
     <.header class="text-center">
-      <%= @page_title %>
+      {@page_title}
       <:subtitle>Get in touch about all the fofocas</:subtitle>
     </.header>
 

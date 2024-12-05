@@ -8,8 +8,8 @@ defmodule SabiaWeb.PostLive.Show do
   def render(assigns) do
     ~H"""
     <.header class="text-center mb-10">
-      <%= @page_title %>
-      <:subtitle>ID: <%= @post.id %></:subtitle>
+      {@page_title}
+      <:subtitle>ID: {@post.id}</:subtitle>
     </.header>
 
     <SabiaWeb.PostLive.PostComponent.post post={@post} deletable={@current_author} linkable={false} />

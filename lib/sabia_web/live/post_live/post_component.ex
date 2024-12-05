@@ -14,10 +14,10 @@ defmodule SabiaWeb.PostLive.PostComponent do
         </div>
         <div>
           <h5 class="mb-2 font-medium leading-tight text-zinc-700">
-            @<%= @post.user.username %>
+            @{@post.user.username}
           </h5>
           <p class="text-base text-zinc-900">
-            <%= @post.body %>
+            {@post.body}
           </p>
         </div>
       </div>
@@ -42,7 +42,7 @@ defmodule SabiaWeb.PostLive.PostComponent do
       class="text-zinc-500 px-2 py-1 rounded-lg hover:text-rose-700 hover:bg-rose-100"
     >
       <.icon name="hero-heart" class="h-5 w-5" />
-      <%= @post_likes_count %>
+      {@post_likes_count}
     </button>
     """
   end

@@ -6,7 +6,7 @@
         <.icon name="hero-heart-mini text-brand" />
         <.gravatar email={@current_user.email} size={24} />
         <p class="bg-brand/5 text-brand rounded-full px-2 font-medium leading-6">
-          @<%= @current_user.username %>
+          @{@current_user.username}
         </p>
       </div>
       <div class="flex items-center gap-4 font-semibold leading-6 text-zinc-900">
@@ -34,6 +34,6 @@
 <main class="px-4 py-20 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-2xl">
     <.flash_group flash={@flash} />
-    <%= @inner_content %>
+    {@inner_content}
   </div>
 </main>
